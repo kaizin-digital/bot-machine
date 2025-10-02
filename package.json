@@ -1,0 +1,29 @@
+{
+  "name": "@bot-machine/telegram-sdk",
+  "version": "0.1.1",
+  "description": "A lightweight and modern framework for building Telegram bots, inspired by Express.js and React.",
+  "author": "eugenekaizin",
+  "license": "MIT",
+  "keywords": [
+    "telegram",
+    "bot",
+    "framework",
+    "express",
+    "react",
+    "state-machine",
+    "flow"
+  ],
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.2.23"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@bot-machine/telegram-client": "^1.0.0",
+    "redis": "^5.8.2",
+    "zod": "^4.1.11"
+  }
+}
