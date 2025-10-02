@@ -1,6 +1,6 @@
 {
   "name": "@bot-machine/telegram-sdk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A lightweight and modern framework for building Telegram bots, inspired by Express.js and React.",
   "author": "eugenekaizin",
   "license": "MIT",
