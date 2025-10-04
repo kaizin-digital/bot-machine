@@ -5,16 +5,17 @@ import type {
 	ReplyKeyboardMarkup,
 	ReplyKeyboardRemove,
 	WebAppInfo,
+	LoginUrl,
 } from "@bot-machine/telegram-client/dist/telegram-types";
 
 /**
  * A fluent API for easily creating Telegram keyboards.
  */
 export class Keyboard {
-	private readonly rows: KeyboardButton[][] = [[]];
+	private readonly rows: (InlineKeyboardButton | KeyboardButton)[][] = [[]];
 
-	private get currentRow(): KeyboardButton[] {
-		return this.rows[this.rows.length - 1];
+	private get currentRow(): (InlineKeyboardButton | KeyboardButton)[] {
+		return this.rows[this.rows.length - 1]!;
 	}
 
 	/**

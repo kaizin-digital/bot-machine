@@ -5,6 +5,7 @@ import type {
 	Update,
 	User,
 } from "@bot-machine/telegram-client";
+import type { InlineKeyboardButton } from "@bot-machine/telegram-client/dist/telegram-types";
 import type { Router } from "./router";
 
 //================================================================================
@@ -101,10 +102,7 @@ export interface MessagePayload {
 	parse_mode?: "HTML" | "MarkdownV2";
 	/** The inline keyboard markup for the message. */
 	reply_markup?: {
-		inline_keyboard: {
-			text: string;
-			callback_data: string;
-		}[][];
+		inline_keyboard: InlineKeyboardButton[][];
 	};
 }
 

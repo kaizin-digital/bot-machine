@@ -4,7 +4,7 @@
     "": {
       "name": "bot-machine",
       "dependencies": {
-        "@bot-machine/telegram-client": "^1.0.0",
+        "@bot-machine/telegram-client": "^1.0.1",
         "redis": "^5.8.2",
         "zod": "^4.1.11",
       },
@@ -17,7 +17,7 @@
     },
   },
   "packages": {
-    "@bot-machine/telegram-client": ["@bot-machine/telegram-client@1.0.0", "", { "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-JB+y0OabXYTEQSVxn+eqB0+xZr8KeZRVyBjf2Q7Aqkjo9CjJ30pY3w7VUpRNdcYSDBs9p6lFExVRrznwa+CHZQ=="],
+    "@bot-machine/telegram-client": ["@bot-machine/telegram-client@1.0.1", "", { "peerDependencies": { "typescript": "^5.0.0" } }, "sha512-M1bb8fdh0Du0uaF2GSLjeSnH0nLvAanWtsbMdM5v6LSfpVjpFG6e63/F8Dkxg41oqEuy22wtAHET5FtuSqpptw=="],
 
     "@redis/bloom": ["@redis/bloom@5.8.2", "", { "peerDependencies": { "@redis/client": "^5.8.2" } }, "sha512-855DR0ChetZLarblio5eM0yLwxA9Dqq50t8StXKp5bAtLT0G+rZ+eRzzqxl37sPqQKjUudSYypz55o6nNhbz0A=="],
 
