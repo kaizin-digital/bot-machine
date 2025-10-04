@@ -57,11 +57,19 @@ export class FlowController {
             const paramNames = this.extractParamNames(pattern);
             if (paramNames && match.length > 1) {
               for (let i = 0; i < paramNames.length && i + 1 < match.length; i++) {
-                ctx.params[paramNames[i]] = match[i + 1];
+                const paramName = paramNames[i];
+                if (paramName) {
+                  const value = match[i + 1];
+                  if (value) {
+                    ctx.params[paramName] = value;
+                  }
+                }
               }
             }
           }
-          await this.executeAction(action, ctx);
+          if (action) {
+            await this.executeAction(action, ctx);
+          }
           return true;
         }
       }
@@ -161,7 +169,9 @@ export class FlowController {
     const regex = /:(\w+)/g;
     let match;
     while ((match = regex.exec(patternStr)) !== null) {
-      paramNames.push(match[1]);
+      if (match[1]) {
+        paramNames.push(match[1]);
+      }
     }
     return paramNames;
   }

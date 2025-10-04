@@ -20,8 +20,7 @@ export const mainFlow = createFlow('main', {
       },
       'rename': {
         command: noopCommand, // Use no-op for simple state transition
-        // Use a function to avoid circular reference issue on module load
-        nextState: () => mainFlow.states.rename,
+        nextState: 'rename', // Direct state name to avoid circular reference
       },
     },
   },
@@ -32,14 +31,14 @@ export const mainFlow = createFlow('main', {
       // Go back to the previous screen
       'back': {
         command: noopCommand, // Use no-op for simple state transition
-        nextState: () => mainFlow.states.counter,
+        nextState: 'counter', // Direct state name to avoid circular reference
       },
     },
     onText: {
       // The framework handles parameter mapping from the pattern to the command's input schema.
       ':newName': {
         command: renameCounterCommand, // Pass the command directly
-        nextState: () => mainFlow.states.counter,
+        nextState: 'counter', // Direct state name to avoid circular reference
       },
     },
   },
