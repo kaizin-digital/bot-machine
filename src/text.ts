@@ -1,3 +1,5 @@
+import { symbolTools, type SymbolTools } from "./text.extensions";
+
 // A simple class to hold the result of the message builder.
 export class FormattedText {
 	constructor(
@@ -12,7 +14,8 @@ interface Tool {
 	(content: Fragment): FormattedText;
 }
 
-interface Tools {
+// The main Tools interface now includes the formatting tools and the symbol tools.
+interface Tools extends SymbolTools {
 	b: Tool; // bold
 	i: Tool; // italic
 	u: Tool; // underline
@@ -37,8 +40,16 @@ function process(fragment: Fragment, state: { needsHtml: boolean }): string {
 		}
 		return fragment.text;
 	}
-	// Escape plain strings/numbers
+	// For symbols and plain strings/numbers, we just convert to string.
+	// The HTML-unsafe characters will be escaped later if needed.
 	const text = String(fragment);
+
+	// If the text is a symbol from our tools, it doesn't need escaping.
+	// Otherwise, escape plain user-provided strings.
+	if (Object.values(symbolTools).includes(text)) {
+		return text;
+	}
+
 	return text
 		.replace(/&/g, "&amp;")
 		.replace(/</g, "&lt;")
@@ -46,6 +57,8 @@ function process(fragment: Fragment, state: { needsHtml: boolean }): string {
 }
 
 const tools: Tools = {
+	// Merge the symbol tools with the formatting tools.
+	...symbolTools,
 	p: (content) => {
 		const state = { needsHtml: false };
 		const text = process(content, state);
