@@ -1,0 +1,45 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Base UI Kit should render a WelcomeMessage 1`] = `
+"🎉 <b>Welcome to the Bot!</b>
+
+<i>Let's get started.</i>
+
+"
+`;
+
+exports[`Base UI Kit should render a WelcomeMessage without a subtitle 1`] = `
+"🎉 <b>Welcome!</b>
+
+"
+`;
+
+exports[`Base UI Kit should render a SuccessMessage 1`] = `
+"✅ <b>Order Confirmed</b>
+
+<i>Your order #123 has been processed.</i>
+
+"
+`;
+
+exports[`Base UI Kit should render an ErrorMessage 1`] = `
+"❌ <b>Payment Failed</b>
+
+<i>Please check your card details and try again.</i>
+
+"
+`;
+
+exports[`Base UI Kit should render a BulletedList 1`] = `
+"• First item
+• Second item
+• Third item
+"
+`;
+
+exports[`Base UI Kit should render an InfoPanel 1`] = `
+"<b>Order ID: </b><code>123-XYZ</code>
+<b>Status: </b><code>Shipped</code>
+<b>Amount: </b><code>$99.99</code>
+"
+`;

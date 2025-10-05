@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bot-Machine UI Kit Storybook</title>
+  <style>
+    :root {
+      --tg-bg-color: #18222d;
+      --tg-text-color: #ffffff;
+      --tg-bubble-color: #22303f;
+      --tg-link-color: #59a7e8;
+      --tg-code-bg-color: #161b22;
+      --tg-spoiler-bg-color: #3e4a58;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--tg-bg-color);
+      color: var(--tg-text-color);
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      border-bottom: 1px solid var(--tg-bubble-color);
+      padding-bottom: 10px;
+    }
+    .story-category {
+      margin-bottom: 40px;
+    }
+    .story {
+      border: 1px solid var(--tg-bubble-color);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .story h3 {
+      margin-top: 0;
+    }
+    .message-bubble {\n      background-color: var(--tg-bubble-color);\n      border-radius: 12px;\n      padding: 8px 12px;\n      max-width: 400px;\n      word-wrap: break-word;\n      line-height: 1.4;\n    }
+    .message-bubble b { font-weight: 600; }
+    .message-bubble i { font-style: italic; }
+    .message-bubble u { text-decoration: underline; }
+    .message-bubble s { text-decoration: line-through; }
+    .message-bubble a { color: var(--tg-link-color); text-decoration: none; }
+    .message-bubble code {
+      background-color: var(--tg-code-bg-color);
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-family: "Menlo", "Consolas", monospace;
+      font-size: 0.9em;
+    }
+    tg-spoiler {
+      background-color: var(--tg-spoiler-bg-color);
+      color: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: color 0.1s, background-color 0.1s;
+    }
+    tg-spoiler.revealed {
+      background-color: transparent;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bot-Machine UI Kit Storybook</h1>
+  <!-- STORIES -->
+
+  <script>
+    document.addEventListener('click', function (e) {
+      if (e.target.tagName === 'TG-SPOILER') {
+        e.target.classList.toggle('revealed');
+      }
+    });
+  </script>
+</body>
+</html>

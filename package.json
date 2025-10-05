@@ -21,10 +21,15 @@
     "AGENT.md",
     "TELEGRAM_CLIENT_INTEGRATION.md",
     "index.ts",
-    "src/**/*"
+    "src/**/*",
+    "docs/**/*"
   ],
+  "scripts": {
+    "storybook:serve": "cd storybook/output && serve ."
+  },
   "devDependencies": {
-    "@types/bun": "^1.2.23"
+    "@types/bun": "^1.2.23",
+    "serve": "^14.2.5"
   },
   "peerDependencies": {
     "typescript": "^5"
