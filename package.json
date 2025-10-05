@@ -15,6 +15,14 @@
   ],
   "module": "index.ts",
   "type": "module",
+  "files": [
+    "README.md",
+    "API_REFERENCE.md",
+    "AGENT.md",
+    "TELEGRAM_CLIENT_INTEGRATION.md",
+    "index.ts",
+    "src/**/*"
+  ],
   "devDependencies": {
     "@types/bun": "^1.2.23"
   },

@@ -2,10 +2,10 @@ import type {
 	InlineKeyboardButton,
 	InlineKeyboardMarkup,
 	KeyboardButton,
+	LoginUrl,
 	ReplyKeyboardMarkup,
 	ReplyKeyboardRemove,
 	WebAppInfo,
-	LoginUrl,
 } from "@bot-machine/telegram-client/dist/telegram-types";
 
 /**
