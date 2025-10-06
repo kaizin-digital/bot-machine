@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { createCommand as createRealCommand } from "./core";
 import { describe, test, expect, mock } from "bun:test";
 import { FlowController, createFlow } from "./flow";
 import type {
@@ -15,6 +17,15 @@ import type { Update } from "@bot-machine/telegram-client";
 
 // Mock data and helpers
 const createMockContext = (update: Partial<Update> = {}): AppContext => {
+	const mockLogger = {
+		info: mock(() => {}),
+		error: mock(() => {}),
+		debug: mock(() => {}),
+		warn: mock(() => {}),
+		fatal: mock(() => {}),
+		child: mock(() => mockLogger),
+	} as any;
+
 	return {
 		update: update as Update,
 		client: {} as any,
@@ -24,6 +35,7 @@ const createMockContext = (update: Partial<Update> = {}): AppContext => {
 		session: {},
 		state: {},
 		params: {},
+		logger: mockLogger,
 		reply: mock(async () => ({}) as any),
 		editMessageText: mock(async () => ({}) as any),
 		deleteMessage: mock(async () => true),
@@ -40,6 +52,7 @@ const createMockCommand = (
 ): BotCommand<any, any> => {
 	return {
 		_id: "BotCommand",
+		name: "mockCommand",
 		input: inputSchema,
 		output: outputSchema,
 		execute: executeFn,
@@ -53,6 +66,7 @@ const createMockQuery = (
 ): BotQuery<any, any> => {
 	return {
 		_id: "BotQuery",
+		name: "mockQuery",
 		input: inputSchema,
 		output: outputSchema,
 		execute: executeFn,
@@ -701,6 +715,81 @@ describe("FlowController", () => {
 			// Verify session data is preserved
 			expect(ctx.session.customData).toBe("preserved");
 		});
+	});
+});
+
+describe("Flow: Terminating Actions", () => {
+	test("should fail validation if terminating command expects void input", async () => {
+		const terminatingCommand = createRealCommand({
+			name: "terminatingVoid",
+			input: z.void(),
+			output: z.void(),
+			execute: mock(async () => {}),
+		});
+
+		const config: FlowConfig = {
+			initial: {
+				component: createMockComponent({ text: "Initial" }),
+				onAction: {
+					exit: {
+						command: terminatingCommand,
+					},
+				},
+			} as FlowState,
+		};
+
+		const flowController = new FlowController(config, "testFlow");
+		const ctx = createMockContext({
+			callback_query: { data: "exit" } as any,
+		});
+		ctx.session.flowName = "testFlow";
+		ctx.session.flowState = "initial";
+
+		await flowController.handle(ctx);
+
+		// The framework passes an empty object `{}` as input, which fails z.void() validation.
+		// The user-facing error message is called.
+		expect(ctx.reply).toHaveBeenCalledWith(
+			"Произошла ошибка. Попробуйте еще раз.",
+		);
+		// The flow should NOT exit because the action failed before it could complete.
+		expect(ctx.session.flowName).toBe("testFlow");
+	});
+
+	test("should succeed if terminating command expects an empty object input", async () => {
+		const executeMock = mock(async () => {});
+		const terminatingCommand = createRealCommand({
+			name: "terminatingObject",
+			input: z.object({}),
+			output: z.void(),
+			execute: executeMock,
+		});
+
+		const config: FlowConfig = {
+			initial: {
+				component: createMockComponent({ text: "Initial" }),
+				onAction: {
+					exit: {
+						command: terminatingCommand,
+					},
+				},
+			} as FlowState,
+		};
+
+		const flowController = new FlowController(config, "testFlow");
+		const ctx = createMockContext({
+			callback_query: { data: "exit" } as any,
+		});
+		ctx.session.flowName = "testFlow";
+		ctx.session.flowState = "initial";
+
+		await flowController.handle(ctx);
+
+		// The command should be executed successfully
+		expect(executeMock).toHaveBeenCalled();
+		// The flow should exit
+		expect(ctx.session.flowName).toBeUndefined();
+		expect(ctx.session.flowState).toBeUndefined();
 	});
 });
 

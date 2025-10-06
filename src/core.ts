@@ -12,22 +12,24 @@ export function createQuery<TInput extends ZodType, TOutput extends ZodType>(con
   output: TOutput;
   execute: (input: z.infer<TInput>, ctx: AppContext) => Promise<z.infer<TOutput>>;
 }): BotQuery<TInput, TOutput> {
-  const { name, execute } = config;
+  const { name, execute, input: inputSchema, output: outputSchema } = config;
 
-  const loggedExecute = async (input: z.infer<TInput>, ctx: AppContext): Promise<z.infer<TOutput>> => {
-    ctx.logger.info({ query: name, input }, `[Query] Executing: ${name}`);
+  const loggedExecute = async (input: z.infer<TInput> | undefined, ctx: AppContext): Promise<z.infer<TOutput>> => {
+    const parsedInput = inputSchema.parse(input);
+    ctx.logger.info({ query: name, input: parsedInput }, `[Query] Executing: ${name}`);
     try {
-      const result = await execute(input, ctx);
-      ctx.logger.info({ query: name, result }, `[Query] Success: ${name}`);
-      return result;
+      const result = await execute(parsedInput, ctx);
+      const parsedOutput = outputSchema.parse(result);
+      ctx.logger.info({ query: name, result: parsedOutput }, `[Query] Success: ${name}`);
+      return parsedOutput;
     } catch (error) {
       ctx.logger.error({ query: name, error }, `[Query] Failed: ${name}`);
       throw error;
     }
   };
 
-  return { ...config, execute: loggedExecute, _id: 'BotQuery' };
-}
+  return { ...config, execute: loggedExecute, _id: 'BotQuery', name };
+};
 
 /**
  * A factory function for creating a `BotCommand` with proper type inference and built-in logging.
@@ -40,19 +42,21 @@ export function createCommand<TInput extends ZodType, TOutput extends ZodType>(c
   output: TOutput;
   execute: (input: z.infer<TInput>, ctx: AppContext) => Promise<z.infer<TOutput>>;
 }): BotCommand<TInput, TOutput> {
-  const { name, execute } = config;
+  const { name, execute, input: inputSchema, output: outputSchema } = config;
 
-  const loggedExecute = async (input: z.infer<TInput>, ctx: AppContext): Promise<z.infer<TOutput>> => {
-    ctx.logger.info({ command: name, input }, `[Command] Executing: ${name}`);
+  const loggedExecute = async (input: z.infer<TInput> | undefined, ctx: AppContext): Promise<z.infer<TOutput>> => {
+    const parsedInput = inputSchema.parse(input);
+    ctx.logger.info({ command: name, input: parsedInput }, `[Command] Executing: ${name}`);
     try {
-      const result = await execute(input, ctx);
-      ctx.logger.info({ command: name, result }, `[Command] Success: ${name}`);
-      return result;
+      const result = await execute(parsedInput, ctx);
+      const parsedOutput = outputSchema.parse(result);
+      ctx.logger.info({ command: name, result: parsedOutput }, `[Command] Success: ${name}`);
+      return parsedOutput;
     } catch (error) {
       ctx.logger.error({ command: name, error }, `[Command] Failed: ${name}`);
       throw error;
     }
   };
 
-  return { ...config, execute: loggedExecute, _id: 'BotCommand' };
+  return { ...config, execute: loggedExecute, _id: 'BotCommand', name };
 }

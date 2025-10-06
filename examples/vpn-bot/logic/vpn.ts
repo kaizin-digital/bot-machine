@@ -33,6 +33,7 @@ export const getVpnPlansQuery = createQuery({
 	execute: async () => {
 		return VPN_PLANS;
 	},
+	name: "getVpnPlans",
 });
 
 /**
@@ -41,6 +42,7 @@ export const getVpnPlansQuery = createQuery({
 export const getVpnPlanQuery = createQuery({
 	input: z.void(), // Input is now void, as we get the ID from the session.
 	output: VpnPlanSchema,
+	name: "getVpnPlan",
 	execute: async (_, ctx) => {
 		const planId = ctx.session.planId;
 		if (!planId) {
@@ -62,6 +64,7 @@ export const getVpnPlanQuery = createQuery({
 export const selectVpnPlanCommand = createCommand({
 	input: z.object({ planId: z.string() }),
 	output: z.object({}),
+	name: "selectVpnPlan",
 	execute: async ({ planId }, ctx) => {
 		ctx.session.planId = planId;
 		return {};
@@ -74,6 +77,7 @@ export const selectVpnPlanCommand = createCommand({
 export const processVpnOrderCommand = createCommand({
 	input: z.void(), // Input is now void, as we get the ID from the session.
 	output: VpnConfigSchema,
+	name: "processVpnOrder",
 	execute: async (_, ctx) => {
 		const planId = ctx.session.planId;
 		if (!planId) {
@@ -85,7 +89,7 @@ export const processVpnOrderCommand = createCommand({
 			throw new Error(`Plan with id ${planId} not found`);
 		}
 
-		console.log(`Simulating payment for plan: ${plan.name} ($${plan.price})`);
+		console.log(`Simulating payment for plan: ${plan.name} (${plan.price})`);
 
 		const timestamp = new Date().toISOString();
 		const fileContent = `

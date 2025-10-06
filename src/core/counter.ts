@@ -2,6 +2,7 @@ import { createCommand, createQuery } from '../core';
 import { z } from 'zod';
 
 export const getCounterQuery = createQuery({
+  name: "getCounter",
   input: z.object({}),
   output: z.object({
     count: z.number(),
@@ -13,6 +14,7 @@ export const getCounterQuery = createQuery({
 });
 
 export const incrementCounterCommand = createCommand({
+  name: "incrementCounter",
   input: z.object({}),
   output: z.object({
     count: z.number(),
@@ -23,6 +25,7 @@ export const incrementCounterCommand = createCommand({
 });
 
 export const decrementCounterCommand = createCommand({
+  name: "decrementCounter",
   input: z.object({}),
   output: z.object({
     count: z.number(),
@@ -33,6 +36,7 @@ export const decrementCounterCommand = createCommand({
 });
 
 export const renameCounterCommand = createCommand({
+  name: "renameCounter",
   input: z.object({
     newName: z.string(),
   }),

@@ -131,6 +131,7 @@ import { z, type ZodType } from "zod";
  */
 export interface BotQuery<TInput extends ZodType, TOutput extends ZodType> {
 	_id: "BotQuery";
+	name: string;
 	input: TInput;
 	output: TOutput;
 	execute: (
@@ -144,6 +145,7 @@ export interface BotQuery<TInput extends ZodType, TOutput extends ZodType> {
  */
 export interface BotCommand<TInput extends ZodType, TOutput extends ZodType> {
 	_id: "BotCommand";
+	name: string;
 	input: TInput;
 	output: TOutput;
 	execute: (

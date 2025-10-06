@@ -44,6 +44,7 @@ const createMockCommand = (
 ): BotCommand<any, any> => {
 	return {
 		_id: "BotCommand",
+		name: "mockCommand",
 		input: inputSchema,
 		output: outputSchema,
 		execute: executeFn,
@@ -57,6 +58,7 @@ const createMockQuery = (
 ): BotQuery<any, any> => {
 	return {
 		_id: "BotQuery",
+		name: "mockQuery",
 		input: inputSchema,
 		output: outputSchema,
 		execute: executeFn,
