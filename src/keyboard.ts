@@ -6,7 +6,7 @@ import type {
 	ReplyKeyboardMarkup,
 	ReplyKeyboardRemove,
 	WebAppInfo,
-} from "@bot-machine/telegram-client/dist/telegram-types";
+} from "@bot-machine/telegram-client";
 
 /**
  * A fluent API for easily creating Telegram keyboards.

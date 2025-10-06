@@ -9,6 +9,7 @@ import type { AppContext } from "./types";
 import type { Router } from "./router";
 import { FormattedText } from "./text";
 import { Keyboard } from "./keyboard";
+import type { ILogger } from "./logger";
 
 /**
  * The concrete implementation of the AppContext interface.
@@ -24,6 +25,7 @@ export class BotContext implements AppContext {
 		public readonly client: TelegramClient,
 		public readonly update: Update,
 		public readonly router: Router,
+		public logger: ILogger,
 	) {}
 
 	get from(): User | undefined {

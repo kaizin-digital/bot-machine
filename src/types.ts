@@ -1,11 +1,12 @@
+import type { ILogger } from "./logger";
 import type {
 	Chat,
+	InlineKeyboardButton,
 	Message,
 	TelegramClient,
 	Update,
 	User,
 } from "@bot-machine/telegram-client";
-import type { InlineKeyboardButton } from "@bot-machine/telegram-client/dist/telegram-types";
 import type { Router } from "./router";
 
 //================================================================================
@@ -21,6 +22,8 @@ export interface AppContext {
 	readonly update: Update;
 	/** The Telegram client instance for making API calls. */
 	readonly client: TelegramClient;
+	/** The logger instance. */
+	logger: ILogger;
 	/** The router instance, used internally for flow control. */
 	readonly router: Router;
 	/** The user who initiated the update. */

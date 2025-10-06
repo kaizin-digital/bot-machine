@@ -3,6 +3,7 @@ import { BotContext } from "./context";
 import type { Handler, Middleware } from "./types";
 import { FlowController } from "./flow";
 import { pathStringToRegex } from "./utils";
+import { ILogger } from "./logger";
 
 /** @internal */
 interface Route {
@@ -21,6 +22,11 @@ export class Router {
 	private textRoutes: Route[] = [];
 	private middlewares: Middleware[] = [];
 	private flows: Record<string, FlowController> = {};
+	private logger: ILogger;
+
+	constructor(options: { logger: ILogger }) {
+		this.logger = options.logger;
+	}
 
 	/**
 	 * Registers a handler for a slash command.
@@ -95,7 +101,7 @@ export class Router {
 	 * @internal
 	 */
 	public async handle(update: Update, client: TelegramClient) {
-		const ctx = new BotContext(client, update, this);
+		const ctx = new BotContext(client, update, this, this.logger);
 
 		let nextFn = async () => {
 			await this.route(ctx);
