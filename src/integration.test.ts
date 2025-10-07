@@ -99,7 +99,15 @@ describe("Router and Flow Integration", () => {
 		const flowDefinition = createFlow("getNameFlow", config);
 
 		// Create router and register the flow
-		const router = new Router();
+		const mockLogger = {
+			info: mock(() => {}),
+			error: mock(() => {}),
+			warn: mock(() => {}),
+			debug: mock(() => {}),
+			trace: mock(() => {}),
+			fatal: mock(() => {}),
+		};
+		const router = new Router({ logger: mockLogger as any });
 		router.addFlow(flowController);
 
 		// Create context with user in the flow
@@ -138,7 +146,15 @@ describe("Router and Flow Integration", () => {
 		const flowController = new FlowController(flowConfig, "testFlow");
 
 		// Create a router with both flow and regular command
-		const router = new Router();
+		const mockLogger = {
+			info: mock(() => {}),
+			error: mock(() => {}),
+			warn: mock(() => {}),
+			debug: mock(() => {}),
+			trace: mock(() => {}),
+			fatal: mock(() => {}),
+		};
+		const router = new Router({ logger: mockLogger as any });
 		router.addFlow(flowController);
 
 		const mockCmdHandler = mock(async (ctx: AppContext) => {
@@ -187,7 +203,15 @@ describe("Router and Flow Integration", () => {
 		};
 
 		const flowController = new FlowController(config, "transitionFlow");
-		const router = new Router();
+		const mockLogger = {
+			info: mock(() => {}),
+			error: mock(() => {}),
+			warn: mock(() => {}),
+			debug: mock(() => {}),
+			trace: mock(() => {}),
+			fatal: mock(() => {}),
+		};
+		const router = new Router({ logger: mockLogger as any });
 		router.addFlow(flowController);
 
 		// Step 1: Enter name
@@ -234,7 +258,15 @@ describe("Router and Flow Integration", () => {
 		const flowController = new FlowController(flowConfig, "activeFlow");
 
 		// Create router with a command that should not interfere with flow
-		const router = new Router();
+		const mockLogger = {
+			info: mock(() => {}),
+			error: mock(() => {}),
+			warn: mock(() => {}),
+			debug: mock(() => {}),
+			trace: mock(() => {}),
+			fatal: mock(() => {}),
+		};
+		const router = new Router({ logger: mockLogger as any });
 		router.addFlow(flowController);
 
 		const generalHandler = mock(async (ctx: AppContext) => {
@@ -294,7 +326,15 @@ describe("Router and Flow Integration", () => {
 		const flow2Controller = new FlowController(flow2Config, "flow2");
 
 		// Router with both flows
-		const router = new Router();
+		const mockLogger = {
+			info: mock(() => {}),
+			error: mock(() => {}),
+			warn: mock(() => {}),
+			debug: mock(() => {}),
+			trace: mock(() => {}),
+			fatal: mock(() => {}),
+		};
+		const router = new Router({ logger: mockLogger as any });
 		router.addFlow(flow1Controller);
 		router.addFlow(flow2Controller);
 

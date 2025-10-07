@@ -1,6 +1,6 @@
 import { describe, test, expect } from "bun:test";
 import { z } from "zod";
-import { createCommand, createQuery } from "../src/core";
+import { createCommand, createQuery } from "./core";
 
 describe("createCommand with optional input schemas", () => {
   test("should handle z.void() schema", async () => {

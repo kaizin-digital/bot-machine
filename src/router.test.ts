@@ -38,7 +38,16 @@ describe("Router", () => {
   let router: Router;
 
   beforeEach(() => {
-    router = new Router();
+    // Create a mock logger for the Router
+    const mockLogger = {
+      info: mock(() => {}),
+      error: mock(() => {}),
+      warn: mock(() => {}),
+      debug: mock(() => {}),
+      trace: mock(() => {}),
+      fatal: mock(() => {}),
+    };
+    router = new Router({ logger: mockLogger as any });
   });
 
   describe("onCommand", () => {
